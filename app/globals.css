@@ -427,13 +427,7 @@ body {
 }
 
 .radio-dot {
-  width: 16px;
-  height: 16px;
-  min-width: 16px;
-  border-radius: 50%;
-  border: 2px solid var(--cloud);
-  transition: all var(--transition-fast);
-  position: relative;
+  display: none;
 }
 
 .radio-option.active .radio-dot {
