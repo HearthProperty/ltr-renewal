@@ -99,12 +99,8 @@ function ResultsContent() {
       {/* Header */}
       <header className="results-header">
         <div className="results-brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/hearth-logo.png" alt="Hearth" className="results-logo" />
-          <div>
-            <h1>Renewal Uplift Planner</h1>
-            <p>Hearth Property Management</p>
-          </div>
+          <h1>Renewal Uplift Planner</h1>
+          <p>Hearth Property Management</p>
         </div>
       </header>
 

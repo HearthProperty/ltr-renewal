@@ -6,8 +6,6 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-inner">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/hearth-logo.png" alt="Hearth" className="hero-logo" />
           <div className="hero-badge">Renewal Uplift Planner</div>
           <h1>Should You Renew This Tenant or Turn the Unit?</h1>
           <p className="hero-sub">
