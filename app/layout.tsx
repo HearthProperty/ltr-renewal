@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Should you renew this tenant or turn the unit? Get a free renewal plan with a raise recommendation, turn-vs-renew comparison, and exact next steps.",
   icons: {
-    icon: "/hearth-logo.png",
+    icon: "/favicon.png",
   },
 };
 
