@@ -17,15 +17,20 @@ export async function sendLeadNotification(
       score.scoreClassification === 'high' ? '🟠' :
       score.scoreClassification === 'moderate' ? '🟡' : '🟢';
 
+    // Truncate result URL for Discord (field values max 1024 chars)
+    const displayUrl = resultUrl.length > 900
+      ? config.site.url
+      : resultUrl;
+
     const embed = {
       title: '🔄 New Renewal Lead',
       color: 3066993, // Hearth-aligned green
       fields: [
         { name: 'Lead Magnet', value: 'Renewal Uplift Planner', inline: true },
-        { name: 'Owner', value: input.ownerName, inline: true },
-        { name: 'Email', value: input.email, inline: true },
-        { name: 'Phone', value: input.phone, inline: true },
-        { name: 'Property', value: input.propertyAddress, inline: false },
+        { name: 'Owner', value: input.ownerName || 'N/A', inline: true },
+        { name: 'Email', value: input.email || 'N/A', inline: true },
+        { name: 'Phone', value: input.phone || 'N/A', inline: true },
+        { name: 'Property', value: input.propertyAddress || 'N/A', inline: false },
         { name: 'Current Rent', value: `$${input.currentRent.toLocaleString()}/mo`, inline: true },
         { name: 'Lease End', value: input.leaseEndDate, inline: true },
         { name: 'Days Left', value: `${daysLeft} days`, inline: true },
@@ -33,7 +38,7 @@ export async function sendLeadNotification(
         { name: 'Target', value: input.targetOutcome, inline: true },
         { name: 'Score', value: `${scoreEmoji} ${score.leadScore}/${score.maxScore} — ${score.scoreClassification}`, inline: true },
         { name: 'Primary Problem', value: score.primaryProblem, inline: true },
-        { name: 'Result', value: `[View Renewal Plan](${resultUrl})`, inline: false },
+        { name: 'Result', value: `[View Renewal Plan](${displayUrl})`, inline: false },
       ],
       timestamp: new Date().toISOString(),
     };

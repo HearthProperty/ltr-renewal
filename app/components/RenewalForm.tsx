@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface FormData {
   ownerName: string;
@@ -23,6 +23,8 @@ export default function RenewalForm() {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const addressInputRef = useRef<HTMLInputElement>(null);
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const [form, setForm] = useState<FormData>({
     ownerName: '',
@@ -42,6 +44,41 @@ export default function RenewalForm() {
   const update = (field: keyof FormData, value: string | boolean | null) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
+
+  // Initialize Google Places Autocomplete when step 2 becomes active
+  const initAutocomplete = useCallback(() => {
+    if (
+      !addressInputRef.current ||
+      autocompleteRef.current ||
+      typeof google === 'undefined' ||
+      !google.maps?.places
+    ) return;
+
+    autocompleteRef.current = new google.maps.places.Autocomplete(
+      addressInputRef.current,
+      {
+        types: ['address'],
+        componentRestrictions: { country: 'us' },
+        fields: ['formatted_address'],
+      }
+    );
+
+    autocompleteRef.current.addListener('place_changed', () => {
+      const place = autocompleteRef.current?.getPlace();
+      if (place?.formatted_address) {
+        update('propertyAddress', place.formatted_address);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (step === 2) {
+      const timer = setTimeout(initAutocomplete, 100);
+      return () => clearTimeout(timer);
+    } else {
+      autocompleteRef.current = null;
+    }
+  }, [step, initAutocomplete]);
 
   // --- Step validation ---
   const canAdvance = (): boolean => {
@@ -202,6 +239,7 @@ export default function RenewalForm() {
             <label htmlFor="propertyAddress">Property Address</label>
             <input
               id="propertyAddress"
+              ref={addressInputRef}
               type="text"
               placeholder="1234 Main St, Austin TX 78701"
               value={form.propertyAddress}

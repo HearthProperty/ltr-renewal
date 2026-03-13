@@ -112,22 +112,19 @@ export async function POST(request: Request) {
     const encodedData = Buffer.from(JSON.stringify(resultData)).toString('base64');
     const resultUrl = `${config.site.url}/results?data=${encodedData}`;
 
-    // 8. Close CRM — CRITICAL PATH
-    let closeLeadId: string | undefined;
-    try {
-      closeLeadId = await createLead(input, score);
-    } catch (error) {
-      console.error('[Submit] Close CRM failed — blocking submission:', error);
-      return NextResponse.json(
-        { success: false, error: 'Failed to process your request. Please try again.' },
-        { status: 500 }
-      );
-    }
+    // 8. Close CRM + Discord — both non-blocking (user always gets results)
+    const [closeResult] = await Promise.allSettled([
+      createLead(input, score).catch((error) => {
+        console.error('[Submit] Close CRM failed (non-blocking):', error);
+        return undefined;
+      }),
+      sendLeadNotification(input, score, resultUrl).catch((error) => {
+        console.error('[Submit] Discord notification failed (non-blocking):', error);
+        return false;
+      }),
+    ]);
 
-    // 9. Discord — FIRE AND FORGET
-    sendLeadNotification(input, score, resultUrl).catch((error) => {
-      console.error('[Submit] Discord notification failed (non-blocking):', error);
-    });
+    const closeLeadId = closeResult.status === 'fulfilled' ? closeResult.value : undefined;
 
     // 10. Respond
     const response: SubmitResponse = {
