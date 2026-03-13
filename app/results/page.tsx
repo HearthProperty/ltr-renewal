@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useState, useCallback } from 'react';
+import { Suspense } from 'react';
 import type {
   ScoreResult,
   RenewalRange,
@@ -30,7 +30,6 @@ interface ResultData {
 
 function ResultsContent() {
   const searchParams = useSearchParams();
-  const [downloading, setDownloading] = useState(false);
 
   const dataParam = searchParams.get('data');
   if (!dataParam) {
@@ -64,35 +63,6 @@ function ResultsContent() {
     score.scoreClassification === 'immediate' ? '#e74c3c' :
     score.scoreClassification === 'high' ? '#e67e22' :
     score.scoreClassification === 'moderate' ? '#f1c40f' : '#2ecc71';
-
-  const handleDownloadPDF = useCallback(async () => {
-    setDownloading(true);
-    try {
-      const res = await fetch('/api/pdf', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) throw new Error('PDF generation failed');
-
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `renewal-plan-${input.propertyAddress.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error('PDF download failed:', err);
-      alert('PDF generation failed. Please try again.');
-    } finally {
-      setDownloading(false);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="results-page">
@@ -267,15 +237,7 @@ function ResultsContent() {
         </div>
       </section>
 
-      {/* Actions */}
       <section className="results-actions">
-        <button
-          className="btn-download"
-          onClick={handleDownloadPDF}
-          disabled={downloading}
-        >
-          {downloading ? 'Generating PDF...' : '📄 Download Renewal Plan PDF'}
-        </button>
 
         <div className="cta-block">
           <h2>Let Hearth handle this renewal.</h2>
