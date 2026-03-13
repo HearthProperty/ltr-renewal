@@ -290,7 +290,7 @@ function ResultsContent() {
           </p>
           <div className="cta-buttons">
             <a
-              href="https://hearthproperty.com/switch"
+              href="https://calendly.com/hearthproperty/30min"
               className="btn-primary"
               target="_blank"
               rel="noopener noreferrer"
@@ -298,7 +298,7 @@ function ResultsContent() {
               Book a Renewal Strategy Call
             </a>
             <a
-              href="https://hearthproperty.com/onboarding"
+              href="https://app.hearthproperty.com/onboarding"
               className="btn-secondary"
               target="_blank"
               rel="noopener noreferrer"
