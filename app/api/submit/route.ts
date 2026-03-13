@@ -102,6 +102,7 @@ export async function POST(request: Request) {
       whatHearthHandles: WHAT_HEARTH_HANDLES,
       input: {
         ownerName: input.ownerName,
+        email: input.email,
         propertyAddress: input.propertyAddress,
         currentRent: input.currentRent,
         leaseEndDate: input.leaseEndDate,

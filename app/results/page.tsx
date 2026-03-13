@@ -11,6 +11,7 @@ import type {
 
 interface ResultInput {
   ownerName: string;
+  email: string;
   propertyAddress: string;
   currentRent: number;
   leaseEndDate: string;
@@ -58,6 +59,14 @@ function ResultsContent() {
   const { score, renewalRange, comparison, calendar, whatToDoNow, whatHearthHandles, input } = data;
 
   const fmt = (n: number) => n.toLocaleString('en-US');
+
+  // Build Calendly URL with prefill params
+  const calendlyParams = new URLSearchParams({
+    name: input.ownerName,
+    email: input.email || '',
+    a1: input.propertyAddress,
+  });
+  const calendlyUrl = `https://calendly.com/hearthproperty/30min?${calendlyParams.toString()}`;
 
   const scoreColor =
     score.scoreClassification === 'immediate' ? '#e74c3c' :
@@ -248,7 +257,7 @@ function ResultsContent() {
           </p>
           <div className="cta-buttons">
             <a
-              href="https://calendly.com/hearthproperty/30min"
+              href={calendlyUrl}
               className="btn-primary"
               target="_blank"
               rel="noopener noreferrer"
