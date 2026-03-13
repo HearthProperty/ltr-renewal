@@ -869,23 +869,10 @@ body {
   font-size: 0.82rem;
   color: var(--slate);
   padding: 4px 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
   line-height: 1.5;
 }
 
-.comparison-pros li::before {
-  content: '✓';
-  color: var(--hearth-green);
-  font-weight: 700;
-  flex-shrink: 0;
-}
 
-.comparison-cons li::before {
-  content: '—';
-  color: var(--mist);
-}
 
 .comparison-summary {
   background: var(--blue-light);
@@ -1002,26 +989,7 @@ body {
   font-size: 0.86rem;
   color: var(--slate);
   padding: 6px 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
   line-height: 1.5;
-}
-
-.milestone-actions li::before {
-  content: '☐';
-  color: var(--mist);
-  flex-shrink: 0;
-}
-
-.milestone.overdue .milestone-actions li::before {
-  content: '⚠';
-  color: var(--red);
-}
-
-.milestone.due .milestone-actions li::before {
-  content: '▸';
-  color: var(--amber);
 }
 
 /* Action Items */
@@ -1041,22 +1009,12 @@ body {
   font-size: 0.88rem;
   color: var(--slate);
   padding: 8px 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
   line-height: 1.6;
   border-bottom: 1px solid var(--frost);
 }
 
 .action-list li:last-child {
   border-bottom: none;
-}
-
-.action-list li::before {
-  content: '→';
-  color: var(--hearth-green);
-  font-weight: 700;
-  flex-shrink: 0;
 }
 
 /* Hearth Handles Grid */
@@ -1074,17 +1032,7 @@ body {
   font-size: 0.88rem;
   color: var(--hearth-green-dark);
   padding: 8px 0;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-sm);
   line-height: 1.5;
-}
-
-.hearth-grid li::before {
-  content: '✓';
-  color: var(--hearth-green);
-  font-weight: 700;
-  flex-shrink: 0;
 }
 
 /* Score Section */
