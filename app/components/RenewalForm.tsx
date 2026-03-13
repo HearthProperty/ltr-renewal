@@ -19,6 +19,14 @@ interface FormData {
 
 const TOTAL_STEPS = 4;
 
+// Format phone as (XXX) XXX-XXXX
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 10);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
 export default function RenewalForm() {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
@@ -111,7 +119,7 @@ export default function RenewalForm() {
       const payload = {
         ownerName: form.ownerName,
         email: form.email,
-        phone: form.phone,
+        phone: form.phone.replace(/\D/g, ''),
         propertyAddress: form.propertyAddress,
         currentRent: parseFloat(form.currentRent),
         leaseEndDate: form.leaseEndDate,
@@ -223,7 +231,7 @@ export default function RenewalForm() {
               type="tel"
               placeholder="(555) 123-4567"
               value={form.phone}
-              onChange={(e) => update('phone', e.target.value)}
+              onChange={(e) => update('phone', formatPhone(e.target.value))}
             />
           </div>
         </div>
