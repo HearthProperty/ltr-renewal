@@ -66,7 +66,7 @@ function ResultsContent() {
     email: input.email || '',
     a1: input.propertyAddress,
   });
-  const calendlyUrl = `https://calendly.com/hearthproperty/30min?${calendlyParams.toString()}`;
+  const calendlyUrl = `https://calendly.com/hearthproperty/hearth-strategy-call?${calendlyParams.toString()}`;
 
   const scoreColor =
     score.scoreClassification === 'immediate' ? '#ef4444' :
