@@ -125,6 +125,13 @@ body {
   filter: brightness(0) invert(1);
 }
 
+.nav__logo-img {
+  height: 30px;
+  width: auto;
+  display: block;
+  margin: 0 auto var(--space-lg);
+}
+
 .hero-badge {
   display: inline-block;
   background: rgba(45, 156, 111, 0.15);

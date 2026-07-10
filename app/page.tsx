@@ -6,6 +6,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="hero">
         <div className="hero-inner">
+          <img src="/hearth-logo.svg" alt="Hearth Property" className="nav__logo-img" />
           <div className="hero-badge">Renewal Uplift Planner</div>
           <h1>Should You Renew This Tenant or Turn the Unit?</h1>
           <p className="hero-sub">
