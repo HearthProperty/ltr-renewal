@@ -5,9 +5,6 @@ export const metadata: Metadata = {
   title: "Renewal Uplift Planner | Hearth Property Management",
   description:
     "Should you renew this tenant or turn the unit? Get a free renewal plan with a raise recommendation, turn-vs-renew comparison, and exact next steps.",
-  icons: {
-    icon: "/favicon.png",
-  },
 };
 
 export default function RootLayout({
